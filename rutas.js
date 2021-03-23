@@ -13,25 +13,32 @@ enrutador.get('/', (req, res)=>{
 
 //recupera lista de productos a desplegar
 enrutador.get('/productos', (req, res)=>{
-
-    conexion.query('SELECT * FROM product', (error, productos)=>{
-        if(error){
-            throw error 
-        }else{
-            res.json(productos)
-        }
+    conexion.getConnection((error, conn)=>{
+       conn.query('SELECT * FROM product', (error, productos)=>{
+           if(error){
+               throw error 
+           }else{
+               res.json(productos)
+               conn.release()
+           }
+       })
     })
+    
 })
 
 //recupera lista de categorias para filtrar
 enrutador.get('/categorias', (req, res)=>{
-    conexion.query('SELECT * FROM category', (error, categorias)=>{
-        if(error){
-            throw error 
-        }else{
-            res.json(categorias)
-        }
+    conexion.getConnection((error, conn)=>{
+        conn.query('SELECT * FROM category', (error, categorias)=>{
+            if(error){
+                throw error
+            }else{
+                res.json(categorias)
+                conn.release()
+            }
+        })
     })
+    
 })
 
 /* * * BUSCADOR * * */
@@ -39,13 +46,16 @@ enrutador.get('/categorias', (req, res)=>{
 enrutador.get('/buscador/:texto', (req, res)=>{
     let text = '%'+req.params.texto+'%' 
     const consulta = 'SELECT * FROM product WHERE product.name like ?'
-    conexion.query(consulta, text, (error, results)=>{
-        if(error){
-            throw error
-        }else{
-            res.json(results)
-        }
-
+    
+    conexion.getConnection((error, conn)=>{
+        conn.query(consulta, text, (error, results)=>{
+            if(error){
+                throw error
+            }else{
+                res.json(results)
+                conn.release()
+            }
+        })
     })
 })
 

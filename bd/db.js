@@ -1,18 +1,20 @@
 const mysql = require('mysql')
-const conexion = mysql.createConnection({
+const pool = mysql.createPool({
+    connectionLimit: 10,
     host:'mdb-test.c6vunyturrl6.us-west-1.rds.amazonaws.com',
     user:'bsale_test',
     password:'bsale_test',
     database:'bsale_test'
 })
 
-conexion.connect((error)=>{
+pool.getConnection((error, conn)=>{
     if(error){
-        console.log(error)
-        return
+        throw error
+        console.log('error en bd  ', error)
     }else{
-        console.log('BBDD conectada!!')
+        console.log('bdd conectada!!')
+        conn.release()
     }
 })
 
-module.exports = conexion
+module.exports = pool
