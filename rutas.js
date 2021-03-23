@@ -25,7 +25,7 @@ enrutador.get('/productos', (req, res)=>{
 
 //recupera lista de categorias para filtrar
 enrutador.get('/categorias', (req, res)=>{
-    conexion.query('SELECT name FROM category', (error, categorias)=>{
+    conexion.query('SELECT * FROM category', (error, categorias)=>{
         if(error){
             throw error 
         }else{
@@ -38,7 +38,7 @@ enrutador.get('/categorias', (req, res)=>{
 //toma la variable de texto que ingresa el usuario y la usa para generar la consulta a la bdd
 enrutador.get('/buscador/:texto', (req, res)=>{
     let text = '%'+req.params.texto+'%' 
-    const consulta = 'SELECT name FROM product WHERE product.name like ?'
+    const consulta = 'SELECT * FROM product WHERE product.name like ?'
     conexion.query(consulta, text, (error, results)=>{
         if(error){
             throw error
