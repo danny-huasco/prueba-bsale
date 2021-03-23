@@ -8,5 +8,5 @@ app.use('/', require('./rutas'))
 
 //aviso de servidor corriendo
 app.listen(port, ()=>{
-    console.log('server running on port', 9000)
+    console.log('server running on port', port)
 })
