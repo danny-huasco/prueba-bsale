@@ -13,25 +13,32 @@ enrutador.get('/', (req, res)=>{
 
 //recupera lista de productos a desplegar
 enrutador.get('/productos', (req, res)=>{
-
-    conexion.query('SELECT * FROM product', (error, productos)=>{
-        if(error){
-            throw error 
-        }else{
-            res.json(productos)
-        }
+    conexion.getConnection((error, conn)=>{
+       conn.query('SELECT * FROM product', (error, productos)=>{
+           if(error){
+               throw error 
+           }else{
+               res.json(productos)
+               conn.release()
+           }
+       })
     })
+    
 })
 
 //recupera lista de categorias para filtrar
 enrutador.get('/categorias', (req, res)=>{
-    conexion.query('SELECT name FROM category', (error, categorias)=>{
-        if(error){
-            throw error 
-        }else{
-            res.json(categorias)
-        }
+    conexion.getConnection((error, conn)=>{
+        conn.query('SELECT * FROM category', (error, categorias)=>{
+            if(error){
+                throw error
+            }else{
+                res.json(categorias)
+                conn.release()
+            }
+        })
     })
+    
 })
 
 /* * * BUSCADOR * * */
@@ -47,6 +54,7 @@ enrutador.get('/buscador/:texto', (req, res)=>{
         }
 
     })
+    
 })
 
 module.exports = enrutador;
