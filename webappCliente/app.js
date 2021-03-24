@@ -66,11 +66,11 @@ function buscador(){
         console.log(urlBuscador)
         fetch(urlBuscador)
         .then(res => res.json())
-        .then(data => console.log(data)/*{
+        .then(data => {
             contprod.innerHTML = '<div class="container"><div class="row">'+data.map((e)=>{
                 return  '<div class="card col-3" style="width: 18rem;"><img src="'+ e.url_image +'" class="card-img-top"><div class="card-body"><h5 class="card-title">'+e.name+'</h5><p class="card-text"> $'+(e.price - ((e.price/100)*e.discount))+'</p><a onclick="addCarrito()" class="btn btn-primary">Añadir al Carrito</a></div></div>'
             }).join('')+'</div></div>'
-        }*/)
+        })
        
     }
 
