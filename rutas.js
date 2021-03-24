@@ -45,7 +45,7 @@ enrutador.get('/categorias', (req, res)=>{
 //toma la variable de texto que ingresa el usuario y la usa para generar la consulta a la bdd
 enrutador.get('/buscador/:texto', (req, res)=>{
     let text = '%'+req.params.texto+'%' 
-    const consulta = 'SELECT * FROM product WHERE product.name like ?'
+    const consulta = 'SELECT * FROM product WHERE name like ?'
     
     conexion.getConnection((error, conn)=>{
         conn.query(consulta, text, (error, results)=>{
