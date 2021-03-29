@@ -1,4 +1,6 @@
+/*** creacion de la conexion a base de datos, especificamente con mysql ***/
 const mysql = require('mysql')
+//se crea una conexion del tipo pool, con limite de 10 conexiones a la vez
 const pool = mysql.createPool({
     connectionLimit: 10,
     host:'mdb-test.c6vunyturrl6.us-west-1.rds.amazonaws.com',
@@ -6,7 +8,7 @@ const pool = mysql.createPool({
     password:'bsale_test',
     database:'bsale_test'
 })
-
+//comprobación de que la conexion fue exitosa, de lo contrario se manifiesta el error en la consola
 pool.getConnection((error, conn)=>{
     if(error){
         throw error
@@ -16,5 +18,5 @@ pool.getConnection((error, conn)=>{
         conn.release()
     }
 })
-
+//exportamos el pool de conexiones para ser utilizado en archivo de rutas
 module.exports = pool
